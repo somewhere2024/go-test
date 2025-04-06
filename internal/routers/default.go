@@ -26,10 +26,30 @@ func DefaultRouter() {
 	//	用户认证授权组
 
 	{
-		user := R.Group("/user")
+		user := R.Group("/auth")
 		user.POST("/login", api.Login)
-		user.POST("register", api.Register)
+		user.POST("/register", api.Register)
 
+	}
+
+	//api保护路由
+	{
+		m := R.Group("/me")
+		m.Use(middlewares.Auth())
+
+		m.GET("/readme", api.ReadMe)
+
+	}
+
+	//todo的api
+	{
+		todo := R.Group("/todo")
+		todo.Use(middlewares.Auth()) //保护路由
+		todo.POST("/create", api.TodoCreate)
+		/*todo.GET("/list/:userId", api.ListTodo)
+		todo.GET("/detail/:todoId", api.DetailTodo)
+		todo.DELETE("/delete/:todoId", api.DeleteTodo)
+		todo.PUT("/update/:todoId", api.UpdateTodo)*/
 	}
 
 	R.Run(":8000")

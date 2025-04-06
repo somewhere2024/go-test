@@ -64,3 +64,12 @@ func Register(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK, "message": "注册成功", "data": gin.H{"username": result.Username, "password": result.Password}})
 }
+
+func ReadMe(c *gin.Context) {
+	user, ok := c.Get("me")
+	if !ok {
+		c.JSON(http.StatusOK, gin.H{"code": http.StatusUnauthorized, "message": "token 无效 未授权"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK, "message": "success", "data": user})
+}

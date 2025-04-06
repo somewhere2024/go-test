@@ -10,9 +10,18 @@ type User struct {
 type Todo struct {
 	ID        int    `gorm:"primaryKey"`
 	Title     string `gorm:"type:varchar(255);not null"`
-	Completed bool   `gorm:"type:tinyint(1);not null"`
+	Completed bool   `gorm:"type:bool;not null;default:false"`
 	CreateAt  int64  `gorm:"autoCreateTime"`
 	UpdateAt  int64  `gorm:"autoUpdateTime"`
 	UserID    int    `gorm:"type:int;not null"`
 	User      User   `gorm:"foreignKey:UserID;references:ID"`
+}
+
+type TodoCreate struct {
+	Title string `json:"title" gorm:"type:varchar(255);not null"`
+}
+
+type UserInfo struct {
+	Id       int    `json:"id"`
+	Username string `json:"username"`
 }

@@ -8,7 +8,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func secret() jwt.Keyfunc {
+func Secret() jwt.Keyfunc {
 	return func(token *jwt.Token) (interface{}, error) {
 		return []byte("this is a test"), nil
 	}
@@ -21,7 +21,7 @@ func CreateToken(payload jwt.MapClaims) (string, error) {
 
 func Get_Crruent_User(token string) (*jwt.MapClaims, error) {
 	user := &jwt.MapClaims{}
-	jwtstr, err := jwt.ParseWithClaims(token, user, secret())
+	jwtstr, err := jwt.ParseWithClaims(token, user, Secret())
 	if err != nil {
 		logger.Logger.Error("token is invalid", zap.Error(err))
 		return nil, err
