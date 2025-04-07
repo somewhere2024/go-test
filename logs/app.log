@@ -25,3 +25,20 @@
 {"level":"WARN","time":"2025-04-06T20:08:40.720+0800","caller":"api/auth.go:71","msg":"上下文中 me 不存在"}
 {"level":"WARN","time":"2025-04-06T20:09:52.583+0800","caller":"middlewares/auth.go:16","msg":"token 为空 未授权"}
 {"level":"WARN","time":"2025-04-06T20:09:52.592+0800","caller":"api/auth.go:71","msg":"上下文中 me 不存在"}
+{"level":"ERROR","time":"2025-04-07T11:00:46.949+0800","caller":"services/auth.go:40","msg":"用户不存在","error":"invalid connection"}
+{"level":"ERROR","time":"2025-04-07T11:00:52.312+0800","caller":"services/auth.go:44","msg":"密码无效"}
+{"level":"INFO","time":"2025-04-07T15:29:34.952+0800","caller":"api/todo.go:93","msg":"title:test,newTitle:,completed:false"}
+{"level":"INFO","time":"2025-04-07T15:30:00.499+0800","caller":"api/todo.go:93","msg":"title:test,newTitle:test2,completed:false"}
+{"level":"INFO","time":"2025-04-07T15:31:42.690+0800","caller":"api/todo.go:93","msg":"title:test,newTitle:test2,completed:false"}
+{"level":"INFO","time":"2025-04-07T15:33:03.056+0800","caller":"api/todo.go:93","msg":"title:test,newTitle:test2,completed:false"}
+{"level":"INFO","time":"2025-04-07T15:33:28.195+0800","caller":"api/todo.go:93","msg":"title:test,newTitle:test2,completed:false"}
+{"level":"INFO","time":"2025-04-07T15:33:44.096+0800","caller":"api/todo.go:93","msg":"title:test,newTitle:test2,completed:false"}
+{"level":"INFO","time":"2025-04-07T15:34:44.698+0800","caller":"api/todo.go:93","msg":"title:test,newTitle:test3,completed:false"}
+{"level":"INFO","time":"2025-04-07T15:36:47.468+0800","caller":"api/todo.go:93","msg":"title:test,newTitle:test4,completed:false"}
+{"level":"INFO","time":"2025-04-07T15:36:57.723+0800","caller":"api/todo.go:93","msg":"title:test3,newTitle:test4,completed:false"}
+{"level":"INFO","time":"2025-04-07T15:37:05.127+0800","caller":"api/todo.go:93","msg":"title:test3,newTitle:testxxx,completed:false"}
+{"level":"INFO","time":"2025-04-07T15:37:23.738+0800","caller":"api/todo.go:93","msg":"title:test3,newTitle:testxxx,completed:false"}
+{"level":"INFO","time":"2025-04-07T15:38:58.268+0800","caller":"api/todo.go:93","msg":"title:test2,newTitle:true,completed:false"}
+{"level":"INFO","time":"2025-04-07T15:39:15.253+0800","caller":"api/todo.go:93","msg":"title:true,newTitle:test2,completed:false"}
+{"level":"INFO","time":"2025-04-07T15:39:38.287+0800","caller":"api/todo.go:93","msg":"title:test2,newTitle:,completed:true"}
+{"level":"INFO","time":"2025-04-07T15:41:32.633+0800","caller":"api/todo.go:93","msg":"title:test2,newTitle:,completed:true"}

@@ -46,10 +46,11 @@ func DefaultRouter() {
 		todo := R.Group("/todo")
 		todo.Use(middlewares.Auth()) //保护路由
 		todo.POST("/create", api.TodoCreate)
-		/*todo.GET("/list/:userId", api.ListTodo)
-		todo.GET("/detail/:todoId", api.DetailTodo)
-		todo.DELETE("/delete/:todoId", api.DeleteTodo)
-		todo.PUT("/update/:todoId", api.UpdateTodo)*/
+		todo.GET("/test", api.TodoTest)
+		todo.GET("/list", api.TodoList)
+		//todo.GET("/detail/:todoId", api.DetailTodo)
+		//todo.DELETE("/delete/:todoId", api.DeleteTodo)
+		todo.PUT("/update", api.TodoUpdate)
 	}
 
 	R.Run(":8000")

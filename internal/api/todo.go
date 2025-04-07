@@ -1,8 +1,11 @@
 package api
 
 import (
+	"fmt"
 	"gin--/internal/dao/mysqldb"
 	"gin--/internal/models"
+	"gin--/internal/services"
+	"gin--/internal/utils/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"net/http"
@@ -45,20 +48,64 @@ func TodoCreate(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK, "message": "创建成功"})
 }
 
-func TodoList(c *gin.Context) {
+func TodoTest(c *gin.Context) {
 	me, ok := c.Get("me")
 	if !ok || me == nil {
 		c.JSON(http.StatusOK, gin.H{"code": http.StatusUnauthorized, "message": "token 无效 未授权"})
 		return
 	}
-	claims, ok := me.(*jwt.MapClaims)
+	user, ok := me.(*jwt.MapClaims)
 	if !ok {
 		c.JSON(http.StatusOK, gin.H{"code": http.StatusUnauthorized, "message": "token 无效 未授权"})
 		return
 	}
-	user := models.UserInfo{
-		Id:       int((*claims)["id"].(float64)),
-		Username: (*claims)["username"].(string),
+	id := (*user)["id"].(float64)
+	username := (*user)["username"].(string)
+	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK, "message": "success", "data": gin.H{"id": id, "username": username}})
+
+}
+
+func TodoList(c *gin.Context) {
+	me, ok := c.Get("me")
+	if !ok {
+		c.JSON(http.StatusOK, gin.H{"code": http.StatusUnauthorized, "message": "token 无效 未授权"})
+		return
 	}
-	
+	user, _ := me.(*jwt.MapClaims)
+	id := (*user)["id"].(float64)
+	todos := &[]models.Todo{}
+	err := services.GetTodoList(int(id), todos)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{"code": http.StatusInternalServerError, "message": "查询失败"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK, "message": "success", "data": todos})
+}
+
+func TodoUpdate(c *gin.Context) {
+	title := c.DefaultPostForm("title", "")
+	if title == "" {
+		c.JSON(http.StatusOK, gin.H{"code": http.StatusBadRequest, "message": "title 不能为空"})
+		return
+	}
+	toUpdateTitle := c.DefaultPostForm("newTitle", "")
+	toCompleted := c.DefaultPostForm("completed", "false")
+	logger.Logger.Info(fmt.Sprintf("title:%s,newTitle:%s,completed:%s", title, toUpdateTitle, toCompleted))
+	if toUpdateTitle == "" && toCompleted != "" {
+		result := services.UpdateCompleted(c, title, toCompleted)
+		if result != nil {
+			c.JSON(http.StatusOK, gin.H{"code": http.StatusInternalServerError, "message": "更新失败"})
+			return
+		}
+	} else if toCompleted == "false" && toUpdateTitle != "" {
+		result := services.UpdateTitle(c, title, toUpdateTitle)
+		if result != nil {
+			c.JSON(http.StatusOK, gin.H{"code": http.StatusInternalServerError, "message": "更新失败"})
+			return
+		}
+	} else {
+		c.JSON(http.StatusOK, gin.H{"code": http.StatusBadRequest, "message": "title 不能为空 和 completed 不能同时为空"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK, "message": "update success"})
 }

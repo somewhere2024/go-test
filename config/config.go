@@ -21,6 +21,8 @@ var Cfg = &LogConfig{
 	MaxBackups: 10,
 }
 
+//下面没用
+
 type DBConfig struct {
 	Host     string
 	Port     int

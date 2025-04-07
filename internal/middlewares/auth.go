@@ -34,7 +34,13 @@ func Auth() gin.HandlerFunc {
 			return
 		}
 
+		if err != nil {
+			logger.Logger.Warn("token 无效 未授权")
+			return
+		}
+
 		c.Set("me", user)
+
 		c.Next() //通过后继续处理请求
 
 	}
