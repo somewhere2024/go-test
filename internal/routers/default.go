@@ -48,9 +48,19 @@ func DefaultRouter() {
 		todo.POST("/create", api.TodoCreate)
 		todo.GET("/test", api.TodoTest)
 		todo.GET("/list", api.TodoList)
-		//todo.GET("/detail/:todoId", api.DetailTodo)
-		//todo.DELETE("/delete/:todoId", api.DeleteTodo)
+		todo.GET("/detail/:title", api.TodoDetail)
+		todo.DELETE("/delete/:title", api.TodoDelete)
 		todo.PUT("/update", api.TodoUpdate)
+	}
+
+	//test
+	{
+		test := R.Group("/test")
+		test.GET("/getHeader", api.GetHeader)
+		test.POST("/postjson", api.PostJson)
+		test.POST("/postform", api.PostForm)
+		test.GET("/getquery", api.GetQuery)
+		test.GET("/getpath/:name/:age/:sex", api.GetPath)
 	}
 
 	R.Run(":8000")

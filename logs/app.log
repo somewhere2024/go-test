@@ -42,3 +42,4 @@
 {"level":"INFO","time":"2025-04-07T15:39:15.253+0800","caller":"api/todo.go:93","msg":"title:true,newTitle:test2,completed:false"}
 {"level":"INFO","time":"2025-04-07T15:39:38.287+0800","caller":"api/todo.go:93","msg":"title:test2,newTitle:,completed:true"}
 {"level":"INFO","time":"2025-04-07T15:41:32.633+0800","caller":"api/todo.go:93","msg":"title:test2,newTitle:,completed:true"}
+{"level":"WARN","time":"2025-04-07T19:53:35.082+0800","caller":"middlewares/auth.go:15","msg":"token 为空 未授权"}

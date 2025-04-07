@@ -109,3 +109,46 @@ func TodoUpdate(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK, "message": "update success"})
 }
+
+func TodoDetail(c *gin.Context) {
+	me, ok := c.Get("me")
+
+	if !ok {
+		c.JSON(http.StatusOK, gin.H{"code": http.StatusUnauthorized, "message": "token 无效 未授权"})
+		return
+	}
+	todoTitle := c.Param("title") //路径参数获取需要查询的title
+	if todoTitle == "" {
+		c.JSON(http.StatusOK, gin.H{"code": http.StatusBadRequest, "message": "id 不能为空"})
+		return
+	}
+	user := me.(*jwt.MapClaims)
+	userId := (*user)["id"].(float64)
+	todo, err := services.GetTodo(int(userId), todoTitle)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{"code": http.StatusInternalServerError, "message": "查询失败"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK, "message": "success", "data": todo})
+}
+
+func TodoDelete(c *gin.Context) {
+	me, ok := c.Get("me")
+	if !ok {
+		c.JSON(http.StatusOK, gin.H{"code": http.StatusUnauthorized, "message": "token 无效 未授权"})
+		return
+	}
+	todoTitle := c.Param("title")
+	if todoTitle == "" {
+		c.JSON(http.StatusOK, gin.H{"code": http.StatusBadRequest, "message": "id 不能为空"})
+		return
+	}
+	user := me.(*jwt.MapClaims)
+	userId := (*user)["id"].(float64)
+	err := services.DeleteTodo(int(userId), todoTitle)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{"code": http.StatusInternalServerError, "message": "删除失败"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK, "message": "delete success"})
+}

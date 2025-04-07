@@ -57,3 +57,30 @@ func UpdateCompleted(c *gin.Context, title string, completed string) error {
 	}
 	return nil
 }
+
+func GetTodo(userId int, todoTitle string) (*models.Todo, error) {
+	if userId == 0 || todoTitle == "" {
+		return nil, errors.New("参数错误")
+	}
+	todo := &models.Todo{}
+	result := mysqldb.DB.Where("user_id = ? and title = ?", userId, todoTitle).First(todo)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return todo, nil
+}
+
+func DeleteTodo(userId int, todoTitle string) error {
+	if userId == 0 || todoTitle == "" {
+		return errors.New("参数错误")
+	}
+
+	todo := &models.Todo{}
+	result := mysqldb.DB.Where("user_id = ? and title = ?", userId, todoTitle).Delete(todo)
+	if result.Error != nil {
+		return result.Error
+	} else if result.RowsAffected == 0 {
+		return errors.New("删除失败")
+	}
+	return nil
+}

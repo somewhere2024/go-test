@@ -14,7 +14,7 @@ type Todo struct {
 	CreateAt  int64  `gorm:"autoCreateTime"`
 	UpdateAt  int64  `gorm:"autoUpdateTime"`
 	UserID    int    `gorm:"type:int;not null"`
-	User      User   `gorm:"foreignKey:UserID;references:ID"`
+	User      User   `json:"-" gorm:"foreignKey:UserID;references:ID"`
 }
 
 type TodoCreate struct {
@@ -24,4 +24,11 @@ type TodoCreate struct {
 type UserInfo struct {
 	Id       int    `json:"id"`
 	Username string `json:"username"`
+}
+
+// testStruct
+type UserTest struct {
+	Name string `json:"name" form:"name" uri:"name"`
+	Age  int    `json:"age" form:"age" uri:"age"`
+	Sex  string `json:"sex" form:"sex" uri:"sex"`
 }
