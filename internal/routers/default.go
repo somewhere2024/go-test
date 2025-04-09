@@ -3,6 +3,7 @@ package routers
 import (
 	"gin--/internal/api"
 	"gin--/internal/middlewares"
+	"gin--/internal/utils/logger"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -10,9 +11,9 @@ import (
 var R *gin.Engine
 
 func DefaultRouter() {
-	//R = gin.New()
-	//R.Use(logger.GinLogger(logger.Logger), logger.GinRecovery(logger.Logger, true))
-	R = gin.Default()
+	R = gin.New()
+	R.Use(logger.GinLogger(logger.Logger), logger.GinRecovery(logger.Logger, true))
+	//R = gin.Default()
 	R.Use(middlewares.CORS())
 	// 默认路由
 	R.GET("/status", func(c *gin.Context) {
@@ -61,6 +62,14 @@ func DefaultRouter() {
 		test.POST("/postform", api.PostForm)
 		test.GET("/getquery", api.GetQuery)
 		test.GET("/getpath/:name/:age/:sex", api.GetPath)
+		test.POST("/binduser", api.BingUser)
+		test.GET("/test", api.TestRe)
+		test.POST("fileload", api.FIleLoad)
+		test.POST("/loadfiles", api.UploadFiles)
+		test.POST("/loadfile", api.UploadFile)
+		test.GET("/downloadfile/:filepath", api.DownloadFile)
+		test.GET("/middleware", api.MiddlewareTest1, api.MiddlewareTest2, api.MiddlewareTest3)
+
 	}
 
 	R.Run(":8000")

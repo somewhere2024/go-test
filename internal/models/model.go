@@ -28,7 +28,7 @@ type UserInfo struct {
 
 // testStruct
 type UserTest struct {
-	Name string `json:"name" form:"name" uri:"name"`
-	Age  int    `json:"age" form:"age" uri:"age"`
-	Sex  string `json:"sex" form:"sex" uri:"sex"`
+	Name string `json:"name" form:"name" uri:"name" binding:"required"`
+	Age  int    `json:"age" form:"age" uri:"age" binding:"gt=18,lt=30"`
+	Sex  string `json:"sex" form:"sex" uri:"sex" binding:"oneof=man woman"`
 }
